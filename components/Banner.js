@@ -1,4 +1,5 @@
 import SignUpModal from "./Modals/SignUpModal";
+import LogInModal from "./Modals/LogInModal";
 
 export default function Banner(){
     return(
@@ -9,7 +10,7 @@ export default function Banner(){
                 <span className="text-[18px] font-normal">People on twitter are the first to know</span>
             </div>
             <div className="space-x-3">
-                <button className="bg-transparent border border-white text-white w-[160px] h-[40px] rounded-full hover:bg-[#cbd2d7]">Log in</button>
+                <LogInModal/>
                 <SignUpModal/>
             </div>
         </div>
