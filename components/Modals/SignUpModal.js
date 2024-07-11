@@ -1,10 +1,47 @@
 import Modal from '@mui/material/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { openSignUpModal, closeSignUpModal } from '@/redux/modalSlice'
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { useEffect, useState } from "react"
+import { auth } from '@/firebase'
+import { setUser } from '@/redux/userSlice'
 
 export default function SignUpModal() {
   const isOpen = useSelector((state) => state.modals.signUpModalOpen)
   const dispatch = useDispatch()
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  async function handleSignUp(){
+
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+
+    )
+
+  }
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) =>{
+      if(!currentUser) return
+      dispatch(setUser({
+        username: currentUser.email.split("@")[0],
+        displayname: null, 
+        email: currentUser.email,
+        uid: currentUser.uid, 
+        photoUrl: null
+      }))
+
+
+    })
+
+    return unsubscribe
+
+  },[])
 
   return (
     <>
@@ -40,14 +77,16 @@ export default function SignUpModal() {
               placeholder="Email"
               className="w-[90%] mt-8 h-10 rounded-md bg-transparent border border-gray-700 p-6"
               type="email"
+              onChange={e => setEmail(e.target.value)}
             />
             <input
               placeholder="Password"
               className="w-[90%] mt-8 h-10 rounded-md bg-transparent border border-gray-700 p-6"
               type="password"
+              onChange={e => setPassword(e.target.value)}
             />
 
-            <button className="mt-9 bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg">
+            <button className="mt-9 bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg" onClick={handleSignUp}>
               Create Account
             </button>
           </div>

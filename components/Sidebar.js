@@ -1,7 +1,18 @@
-import {HomeIcon, HashtagIcon, InboxIcon, BookmarkIcon, ClipboardListIcon, BellIcon, UserIcon, DotsCircleHorizontalIcon} from "@heroicons/react/outline"
+import { signOutUser } from "@/redux/userSlice"
+import {HomeIcon, HashtagIcon, InboxIcon, BookmarkIcon, ClipboardListIcon, BellIcon, UserIcon, DotsCircleHorizontalIcon, DotsHorizontalIcon} from "@heroicons/react/outline"
 import Image from "next/image"
-
+import { useDispatch, useSelector } from "react-redux"
+import { signOut } from "firebase/auth"
+import { auth } from "@/firebase"
 export default function Sidebar(){
+    const username = useSelector(state => state.user.username)
+    const dispatch = useDispatch()
+
+    async function handleSignOut(){
+        await signOut(auth)
+        dispatch(signOutUser())
+
+    }
     return (
         // sidebar hidden by default
         <div className="h-full hidden sm:flex flex-col fixed xl:ml-20"> 
@@ -19,12 +30,17 @@ export default function Sidebar(){
                 <button className="hidden xl:inline bg-[#1d9bf0] rounded-full h-[52px] w-[200px] text-xl font-bold mt-2">
                     Tweet
                 </button>
-
+            <div onClick={handleSignOut} className="absolute flex justify-center item-center p-3 space-x-3 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer bottom-0 xl:p-3">
+                <img className="w-10 h-10 rounded-full object-cover" src="/assets/pfp.png"></img>
+                <div className="hidden xl:inline">
+                    <h1 className="font-bold whitespace-nowrap">Name</h1>
+                    <h1 className="text-gray-500">@Username</h1>
+                </div>
+                <DotsHorizontalIcon className="hidden xl:inline h-5"/>
+            </div>
             </nav>
             
-            <div className="absolute bottom-0">User</div>
-
-
+        
         </div>
     )
     }
