@@ -5,15 +5,20 @@ import styles from '@/styles/Home.module.css'
 import Sidebar from '@/components/Sidebar'
 import PostsFeed from '@/components/PostsFeed'
 import Trending from '@/components/Trending'
+import Banner from '@/components/Banner'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <div className='bg-black min-h-screen text-[#E7E9EA] max-w-[1400] ml-auto mr-auto flex'>
+    <div className='bg-black'>
+    <div className='flex bg-black min-h-screen text-[#E7E9EA] max-w-[1400px] mx-auto'>
       <Sidebar />
       <PostsFeed />
       <Trending />
     </div>
+    <Banner/>
+    </div>
+
   )
 }

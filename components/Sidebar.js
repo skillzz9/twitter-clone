@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function Sidebar(){
     return (
         // sidebar hidden by default
-        <div className="h-full hidden sm:flex flex-col fixed xl:m-24"> 
+        <div className="h-full hidden sm:flex flex-col fixed xl:ml-20"> 
             <nav className="h-full relative xl:space-y-1.5">
             <div className="flex justify-center xl:justify-start items-center p-2 xl:p-3">
                 <Image src={"/assets/twitter-logo.png"} width={34} height={34} />
