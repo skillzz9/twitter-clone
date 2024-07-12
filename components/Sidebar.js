@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth"
 import { auth } from "@/firebase"
 export default function Sidebar(){
     const user = useSelector(state => state.user)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     async function handleSignOut(){
         await signOut(auth)
@@ -31,7 +31,7 @@ export default function Sidebar(){
                     Tweet
                 </button>
             <div onClick={handleSignOut} className="absolute flex justify-center item-center p-3 space-x-3 hover:bg-white hover:bg-opacity-10 rounded-full cursor-pointer bottom-0 xl:p-3">
-                <img className="w-10 h-10 rounded-full object-cover" src={user.photoURL || "/assets/pfp.png"}></img>
+                <img className="w-10 h-10 rounded-full object-cover" src={user.photoUrl || "./assets/profilePictures/pfp6.png"}></img>
                 <div className="hidden xl:inline">
                     <h1 className="font-bold whitespace-nowrap">{user.name}</h1>
                     <h1 className="text-gray-500">@{user.username}</h1>
