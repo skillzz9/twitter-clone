@@ -4,6 +4,7 @@ import Image from "next/image"
 import { useDispatch, useSelector } from "react-redux"
 import { signOut } from "firebase/auth"
 import { auth } from "@/firebase"
+import { closeLogInModal, closeSignUpModal } from "@/redux/modalSlice"
 export default function Sidebar(){
     const user = useSelector(state => state.user)
     const dispatch = useDispatch();
@@ -11,6 +12,8 @@ export default function Sidebar(){
     async function handleSignOut(){
         await signOut(auth)
         dispatch(signOutUser())
+        dispatch(closeSignUpModal())
+        dispatch(closeLogInModal())
 
     }
     return (

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { auth } from '@/firebase'
 import { useRouter } from 'next/router';
 import { setUser } from '@/redux/userSlice'
+import {signInWithEmailAndPassword} from 'firebase/auth'
 
 export default function SignUpModal() {
   const isOpen = useSelector((state) => state.modals.signUpModalOpen);
@@ -26,17 +27,19 @@ export default function SignUpModal() {
       password
 
     );
-    console.log("hello: here is the data")
-    console.log(name)
 
     await updateProfile(auth.currentUser, {
       displayName: name,
       photoURL: `./assets/profilePictures/pfp${Math.ceil(Math.random() * 6)}.png`
 
     })
-  console.log("hello: here is some more data")
+
+    router.reload()
 
 
+  }
+  async function handleGuestSignIn() {
+    await signInWithEmailAndPassword(auth, 'guest32145@gmail.com', '654321');
   }
 
   useEffect(() => {
@@ -73,7 +76,7 @@ export default function SignUpModal() {
       >
         <div className="w-[90%] h-[400px] bg-black text-white md:w-[550px] md:h-[600px] border border-gray-700 rounded-lg">
           <div className="flex flex-col items-center mt-10">
-            <button className="bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg">
+            <button onClick={handleGuestSignIn} className="bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg">
               Sign In as Guest
             </button>
             <p className="text-white p-3 text-bold text-sm font-bold">or</p>

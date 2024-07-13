@@ -1,11 +1,25 @@
 import Modal from '@mui/material/Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { openLogInModal, closeLogInModal } from '@/redux/modalSlice'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import {useState} from "react"
+import {auth} from "@/firebase";
 
-export default function SignUpModal() {
+export default function LoginModal() {
   const isOpen = useSelector((state) => state.modals.logInModalOpen)
   const dispatch = useDispatch()
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSignIn() {
+    await signInWithEmailAndPassword(auth, email, password);
+  }
+
+  async function handleGuestSignIn() {
+    await signInWithEmailAndPassword(auth, 'guest32145@gmail.com', '654321');
+  }
+ 
   return (
     <>
       <button
@@ -29,18 +43,20 @@ export default function SignUpModal() {
               placeholder="Email"
               className="w-[90%] mt-8 h-10 rounded-md bg-transparent border border-gray-700 p-6"
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
               placeholder="Password"
               className="w-[90%] mt-8 h-10 rounded-md bg-transparent border border-gray-700 p-6"
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
             />
 
-            <button className="mt-9 bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg">
+            <button onClick={handleSignIn} className="mt-9 bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg">
               Sign in
             </button>
             <p className="text-white p-3 text-bold text-sm font-bold mt-8">or</p>
-            <button className="bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg mt-8">
+            <button onClick={handleGuestSignIn}className="bg-white w-[90%] h-10 rounded-lg text-black font-bold text-lg mt-8">
               Sign In as Guest
             </button>
           </div>
