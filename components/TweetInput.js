@@ -35,7 +35,7 @@ export default function TweetInput(){
                 </textarea>
 
             <div className="flex justify-between border-t border-gray-700 pt-4">
-                <div className="flex ">
+                <div className="flex space-x-0">
                     <div className="iconAnimation">
                     <PhotographIcon className="h-[22px] text-[#1d9bf0]"/>
                     </div>

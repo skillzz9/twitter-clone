@@ -10,8 +10,8 @@ export default function PostsFeed(){
 
     useEffect(() => {
         const q = query(collection(db, "posts"), orderBy("timestamp","desc"));
-        const unsubscribe = onSnapshot(q, (snaphot) =>{
-            setTweets(snaphot.docs)
+        const unsubscribe = onSnapshot(q, (snapshot) =>{
+            setTweets(snapshot.docs)
         })
 
         return unsubscribe
