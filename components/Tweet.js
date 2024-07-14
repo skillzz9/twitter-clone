@@ -1,9 +1,11 @@
 import { ChartBarIcon, ChatIcon, HeartIcon, UploadIcon } from "@heroicons/react/outline"
 
+import Moment from "react-moment"
+
 export default function Tweet( {data} ){
     return (
         <div className="border-b border-gray-700">
-        { <TweetHeader username={data?.userName} name={data?.name} /*timestamp={data?.timestamp}*/ text={data?.tweet} photoUrl={data?.photoUrl}/>}
+        { <TweetHeader username={data?.userName} name={data?.name} timestamp={data?.timestamp?.toDate()} text={data?.tweet} photoUrl={data?.photoUrl}/>}
         <div className="p-3 ml-16 text-gray-500 flex space-x-14">
             <ChatIcon className="w-5 cursor-pointer hover:text-green-400"/>
             <HeartIcon className="w-5 cursor-pointer hover:text-pink-500"/>
@@ -25,9 +27,10 @@ export function TweetHeader({username, name, timestamp, text, photoUrl}){
                     <h1 className="text-white font-bold">{name}</h1>
                     <span>@{username}</span>
                     <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
-                    <span>{timestamp}</span>
+                    <Moment fromNow>
+                    {timestamp}
+                    </Moment>
                 </div>
-
                 <span>{text}</span>
 
 
