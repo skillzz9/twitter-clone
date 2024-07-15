@@ -55,6 +55,7 @@ export const {
   closeLogInModal,
   openCommentModal,
   closeCommentModal,
+  setCommentTweet,
 
 } = modalSlice.actions
 
