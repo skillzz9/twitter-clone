@@ -38,10 +38,9 @@ export function Comments({ tweetData }) {
             <div>
               <div className="text-gray-500 flex items-center space-x-2 mb-1">
                 <h1 className="text-white font-bold">{comment.name}</h1>
-                <span>@{comment.usename}</span>
-                <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
+                <span>@{comment.username}</span>
               </div>
-              <span className="text-2xl">{comment.comment}</span>
+              <span>{comment.comment}</span>
             </div>
           </div>
         </div>
