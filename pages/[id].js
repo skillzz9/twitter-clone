@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
     text: data?.tweet,
     comments: data.comments || null,
     timestamp: JSON.stringify(data?.timestamp.toDate()),
-    image: data.image || null,
+    image: data?.image || null,
   };
 
   return {
