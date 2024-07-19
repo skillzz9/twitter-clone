@@ -25,6 +25,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Moment from 'react-moment';
 import { useDispatch, useSelector } from 'react-redux';
+import Spinner from './Spinner';
 
 export default function Tweet({ data, id }) {
   const dispatch = useDispatch();
@@ -142,6 +143,8 @@ export function TweetHeader({
   photoUrl,
   image,
 }) {
+  const [imageLoading, setImageLoading] = useState(true);
+
   return (
     <div className="flex space-x-3 p-3 border-gray-700">
       <img className="w-11 h-11 rounded-full object-cover" src={photoUrl} />
@@ -156,10 +159,20 @@ export function TweetHeader({
         <span>{text}</span>
 
         {image && (
-          <img
-            className="object-cover border border-gray-700 rounded-md mt-3 max-h-80"
-            src={image}
-          />
+          <div className="relative">
+            {imageLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <Spinner />
+              </div>
+            )}
+            <img
+              className={`object-cover border border-gray-700 rounded-md mt-3 max-h-80 ${
+                imageLoading ? 'hidden' : 'block'
+              }`}
+              src={image}
+              onLoad={() => setImageLoading(false)}
+            />
+          </div>
         )}
       </div>
     </div>

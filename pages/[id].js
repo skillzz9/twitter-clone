@@ -1,12 +1,14 @@
 import CommentBox, { Comments } from '@/components/CommentBox';
 import PostsFeed from '@/components/PostsFeed';
 import Sidebar from '@/components/Sidebar';
+import Spinner from '@/components/Spinner';
 import Trending from '@/components/Trending';
 import Tweet from '@/components/Tweet';
 import { db } from '@/firebase';
 import { ArrowLeftIcon } from '@heroicons/react/outline';
 import { doc, getDoc } from 'firebase/firestore';
 import Link from 'next/link';
+import { useState } from 'react';
 import Moment from 'react-moment';
 import { useSelector } from 'react-redux';
 
@@ -34,6 +36,7 @@ export async function getServerSideProps(context) {
 
 export default function CommentsPage({ tweetData }) {
   const user = useSelector((state) => state.user);
+  const [imageLoading, setImageLoading] = useState(true);
   return (
     <div className="bg-black">
       <div className="flex bg-black min-h-screen text-[#E7E9EA] max-w-[1400px] mx-auto">
@@ -64,10 +67,21 @@ export default function CommentsPage({ tweetData }) {
                 </div>
                 <span className="text-2xl">{tweetData.text}</span>
                 {tweetData.image && (
-                  <img
-                    className="object-cover border border-gray-500 rounded-md mt-3 max-h-80"
-                    src={tweetData.image}
-                  />
+                  <div className="relative">
+                    {imageLoading && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                        <Spinner />
+                      </div>
+                    )}
+                    <img
+                      className={`object-cover border border-gray-700 rounded-md mt-3 max-h-80 ${
+                        imageLoading ? 'hidden' : 'block'
+                      }`}
+                      src={tweetData.image}
+                      onLoad={() => setImageLoading(false)}
+                      onError={() => setImageLoading(false)}
+                    />
+                  </div>
                 )}
               </div>
             </div>
